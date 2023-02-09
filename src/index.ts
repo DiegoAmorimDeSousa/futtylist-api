@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import Router from './routers/router';
+import routes from './routers/index';
 
 const PORT = process.env.PORT || 4000;
 const HOSTNAME = process.env.HOSTNAME || 'http://localhost';
@@ -18,7 +18,7 @@ app.use(cors({
     origin: ['http://localhost:3000']
 }));
 
-app.use('/api', Router);
+app.use('/api', routes);
 
 app.use((req, res) => {
     res.status(404);
