@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import fs from 'fs';
 
-class GetListController {
+class ListController {
   async get(request: Request, response: Response) {
     const list: any = fs.readFileSync('./src/app/utils/arquivo.json');
 
@@ -9,14 +9,18 @@ class GetListController {
   }
 
   async create(request: Request, response: Response) {
-    const { list } = request.body;
-
-    fs.writeFile('./src/app/utils/arquivo.json', JSON.stringify(list), (err) => {
-      if (err) throw err;
-    });
-
-    return response.json('O arquivo foi criado!');
+    try {
+      const { list } = request.body;
+  
+      fs.writeFile('./src/app/utils/arquivo.json', JSON.stringify(list), (err) => {
+        if (err) throw err;
+      });
+  
+      return response.json('O arquivo foi criado!');
+    } catch (error) {
+      console.log('ERROR', error);
+    }
   }
 }
 
-export default new GetListController();
+export default new ListController();
